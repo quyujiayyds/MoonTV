@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 
-export const runtime = 'nodejs';
+export const runtime = 'edge';
 
 // OrionTV 兼容接口
 export async function GET(request: Request) {
@@ -14,10 +14,10 @@ export async function GET(request: Request) {
   try {
     const imageResponse = await fetch(imageUrl, {
       headers: {
-        'User-Agent':
-          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36',
         Accept: 'image/jpeg,image/png,image/gif,*/*;q=0.8',
         Referer: 'https://movie.douban.com/',
+        'User-Agent':
+          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36',
       },
     });
 
@@ -47,7 +47,6 @@ export async function GET(request: Request) {
     headers.set('Cache-Control', 'public, max-age=15720000, s-maxage=15720000'); // 缓存半年
     headers.set('CDN-Cache-Control', 'public, s-maxage=15720000');
     headers.set('Vercel-CDN-Cache-Control', 'public, s-maxage=15720000');
-    headers.set('Netlify-Vary', 'query');
 
     // 直接返回图片流
     return new Response(imageResponse.body, {
